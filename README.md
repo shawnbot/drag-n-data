@@ -1,6 +1,9 @@
 # drag-n-data (dnd)
 
-A simple helper for reading data files via browser drag-n-drop with d3.
+A simple helper for reading data files (CSV, TSV, and JSON) via browser
+drag-n-drop with support from d3. Check
+[caniuse.com](http://caniuse.com/dragndrop) to see which browsers support the
+HTML5 drag-and-drop API.
 
 ## Usage
 
