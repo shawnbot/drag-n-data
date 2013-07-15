@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="dnd.js"></script>
+    <style>
+
+      #dropper {
+        background: #f9f9f9;
+        min-height: 300px;
+      }
+
+      #dropper.over {
+        background: #6699ff;
+      }
+
+    </style>
+  </head>
+  <body>
+    <h1>drag-n-data</h1>
+    <div id="dropper">
+      <ul class="files">
+      </ul>
+    </div>
+    <script>
+
+      var dropper = d3.select("#dropper")
+        .call(dnd.dropper()
+          .on("dragover", function(e) {
+            dropper.classed("over", true);
+          })
+          .on("dragout", function(e) {
+            dropper.classed("over", false);
+          })
+          .on("drop", function(e) {
+            dropper.select("ul.files")
+              .text("");
+            dropper
+              .classed("over", false)
+              .classed("reading", true);
+          })
+          .on("read", function(files) {
+            dropper.classed("reading", false);
+            var list = dropper.select("ul.files")
+              .selectAll("li")
+              .data(files, function(d) {
+                return d.name;
+              });
+            list.enter().append("li");
+            list.exit().remove();
+            list.text(function(d) {
+              return [
+                d.name,
+                "(" + d.type + ")",
+                "@", dnd.file.formatSize(d.size),
+              ].join(" ");
+            });
+          }));
+
+    </script>
+  </body>
+</html>
